@@ -8,11 +8,10 @@ import { LocationAccuracy } from "expo-location";
 
 export default function App() {
   const [origin, setOrigin] = useState<any>();
-  const [destination, setDestination] = useState();
 
   useEffect(() => {
     (async function () {
-      const { status, permissions } = await Permissions.askAsync(
+      const { status } = await Permissions.askAsync(
         Permissions.LOCATION_FOREGROUND
       );
       if (status === "granted") {
@@ -25,20 +24,6 @@ export default function App() {
           latitudeDelta: 0.00922,
           longitudeDelta: 0.00421,
         });
-
-        //app driver
-        await Location.watchPositionAsync(
-          {
-            accuracy: Location.Accuracy.Balanced,
-            timeInterval: 1000,
-            distanceInterval: 5,
-          },
-          (loc) => {
-            console.log(loc.coords.latitude, loc.coords.longitude);
-          }
-        );
-        //app driver
-      } else {
       }
     })();
   }, []);
